@@ -1,18 +1,34 @@
-package com.pluralsight.blog.model;
+package com.potatogod123.blog.model;
 
+import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String lead;
+    @Column(length = 1000000)
+    @Lob
     private String body;
     private String author;
+    @Temporal(TemporalType.DATE)
     private Date date;
 
+    @ManyToOne
+    private Category category;
+
+    public Post() {
+        super();
+    }
+
     public Post(Long id, String title, String lead, String body, String author, Date date) {
+        this();
         this.id = id;
         this.title = title;
         this.lead = lead;
@@ -72,5 +88,13 @@ public class Post {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
